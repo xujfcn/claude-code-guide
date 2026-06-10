@@ -1,2 +1,7 @@
 .DS_Store
 Thumbs.db
+__pycache__/
+*.pyc
+logs/*.log
+promotion/daily_series/generated/
+promotion/daily_series/results.jsonl
