@@ -1,0 +1,16 @@
+{
+  "linkedin": "urn:li:share:7470300145381851136",
+  "mastodon_error": "RuntimeError('403 {\"error\":\"Your login is currently disabled\"}')",
+  "bluesky_error": "RuntimeError('auth 401 {\"error\":\"AccountTakedown\",\"message\":\"Account has been taken down\"}')",
+  "hashnode_error": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')",
+  "blogger_error": "RuntimeError('400 {\\n  \"error\": \"invalid_grant\",\\n  \"error_description\": \"Token has been expired or revoked.\"\\n}')",
+  "wordpress": "https://llminsight.wordpress.com/2026/06/10/claude-code-guide-practical-setup-api-routing-and-ai-coding-workflows/",
+  "tumblr": {
+    "id": 818999051162959872,
+    "id_string": "818999051162959872",
+    "state": "published",
+    "display_text": "Posted to metavi"
+  },
+  "devto": "pushed to xujfcn/devto main: posts/claude-code-guide-crazyrouter-setup-workflows.md",
+  "zenn": "pushed to xujfcn/zenn main: articles/claude-code-guide-crazyrouter.md"
+}
