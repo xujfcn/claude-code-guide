@@ -1,30 +1,121 @@
-# Claude Code Guide
+# Claude Code 中文实战指南：通过 Crazyrouter 统一接入 Claude、GPT 与国内模型
 
-这是一套 Claude Code 中文实践教程，共 36 篇，围绕安装配置、Crazyrouter 统一接入、提示词模板、项目实战、原型设计、架构图和应用场景展开。
+> 36+ 篇 Claude Code 中文教程，覆盖安装配置、Crazyrouter 接入、提示词模板、项目实战、产品原型、Figma、Mermaid 架构图和 AI Coding 工作流。
 
-## 快速接入 Crazyrouter
+如果你正在搜索 **Claude Code 使用教程**、**Claude Code 接入第三方 API**、**Claude Code 中转站**、**Claude Code 国内模型**，这个仓库可以按从入门到实战的顺序阅读。
 
-Claude Code / Anthropic 原生客户端使用根域名：
+## 最快 3 步接入 Crazyrouter
+
+Claude Code / Anthropic 原生客户端使用 Crazyrouter **根域名**，不要在这里加 `/v1`：
 
 ```bash
 export ANTHROPIC_BASE_URL=https://cn.crazyrouter.com
 export ANTHROPIC_API_KEY=YOUR_CRAZYROUTER_API_KEY
+claude
 ```
 
-OpenAI 兼容 SDK、HTTP 请求和前后端应用使用 `/v1` 地址：
+Windows PowerShell：
+
+```powershell
+[Environment]::SetEnvironmentVariable("ANTHROPIC_BASE_URL", "https://cn.crazyrouter.com", "User")
+[Environment]::SetEnvironmentVariable("ANTHROPIC_API_KEY", "YOUR_CRAZYROUTER_API_KEY", "User")
+```
+
+OpenAI 兼容 SDK、HTTP 请求和前后端应用才使用 `/v1` 地址：
 
 ```text
 https://cn.crazyrouter.com/v1
 ```
 
-相关链接：
+## 一键配置脚本
 
-- [Crazyrouter 控制台](https://crazyrouter.com/console)
-- [Claude Code 接入文档](https://docs.crazyrouter.com/integrations/claude-code)
-- [API Endpoint 说明](https://docs.crazyrouter.com/api-endpoint)
+如果你希望自动检查 Git、Node.js、Claude Code，并写入环境变量，可以使用：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/xujfcn/crazyrouter-claude-code/main/setup.sh | bash
+```
+
+脚本仓库：
+
 - [Crazyrouter Claude Code 一键配置脚本](https://github.com/xujfcn/crazyrouter-claude-code)
 
-## 目录
+## 为什么 Claude Code 适合接入 Crazyrouter
+
+- 一个 API Token 统一管理 Claude、GPT、Gemini、DeepSeek 等模型。
+- Claude Code 使用根域名：`https://cn.crazyrouter.com`，避免 `/v1/v1/messages` 配置错误。
+- 控制台统一查看调用日志、余额、失败原因和模型权限。
+- 可以给 Claude Code 单独创建 Token，设置预算和模型白名单。
+- 适合团队把 AI Coding 工具、后端服务和内部 Agent 统一到一个入口。
+
+## 推荐阅读路径
+
+### 入门配置
+
+1. [01｜Claude Code 接入 Crazyrouter 快速入门与配置](articles/01-01-claude-code-接入-crazyrouter-快速入门与配置.md)
+2. [05｜通过 Crazyrouter 在 Claude Code 中统一接入国内模型](articles/05-05-通过-crazyrouter-在-claude-code-中统一接入国内模型.md)
+3. [06｜Claude Code 入门基础操作](articles/06-06-claude-code-接入-crazyrouter-连载-06-第三章-入门基础操作.md)
+
+### 工程实践
+
+1. [02｜Claude Code 接入 Crazyrouter 的工程实践](articles/02-02-claude-code-接入-crazyrouter-的工程实践.md)
+2. [03｜Claude Code 接入 Crazyrouter 的企业级应用实战](articles/03-03-claude-code-接入-crazyrouter-的企业级应用实战.md)
+3. [24｜AI Coding 实战：从 PRD 到代码生成](articles/24-24-claude-code-接入-crazyrouter-连载-24-aicoding实战-从prd到代码生成.md)
+
+### 产品与设计工作流
+
+1. [25｜Claude Code + Figma：从 PRD 到设计稿](articles/25-25-claude-code-figma-ai-画原型完整教程-从-prd-到设计稿只要-5-分钟-crazyrouter-连载-25.md)
+2. [28｜Claude Code + Mermaid 一键生成架构图、时序图、流程图](articles/28-28-claude-code-mermaid-一键生成架构图-时序图-流程图-crazyrouter-连载-28.md)
+3. [36｜用设计和编程 Agent 设计网站](articles/36-36-claude-code-接入-crazyrouter-连载-36-用设计和编程-agent-设计网站.md)
+
+## 常见错误
+
+### 1. Claude Code 的 Base URL 写成了 `/v1`
+
+错误：
+
+```text
+ANTHROPIC_BASE_URL=https://cn.crazyrouter.com/v1
+```
+
+正确：
+
+```text
+ANTHROPIC_BASE_URL=https://cn.crazyrouter.com
+```
+
+Claude Code 会自己拼接 `/v1/messages`。如果你手动加 `/v1`，日志里可能出现 `/v1/v1/messages`。
+
+### 2. 把 OpenAI compatible 地址用于 Claude Code
+
+OpenAI SDK / HTTP 请求用：
+
+```text
+https://cn.crazyrouter.com/v1
+```
+
+Claude Code 用：
+
+```text
+https://cn.crazyrouter.com
+```
+
+### 3. Token 没有模型权限
+
+如果返回 `model not allowed`、`403` 或模型不可用，先检查 Crazyrouter 控制台里的 Token 白名单和余额。
+
+### 4. 把真实 API Key 写进仓库
+
+示例里只使用 `YOUR_CRAZYROUTER_API_KEY`。真实 Token 不要提交到 Git，也不要长期放进公开对话上下文。
+
+## 相关链接
+
+- [Crazyrouter 控制台](https://crazyrouter.com/console?utm_source=github&utm_medium=tutorial&utm_campaign=claude_code_guide)
+- [Crazyrouter 价格与模型](https://crazyrouter.com/pricing?utm_source=github&utm_medium=tutorial&utm_campaign=claude_code_guide)
+- [Claude Code 接入文档](https://docs.crazyrouter.com/integrations/claude-code?utm_source=github&utm_medium=tutorial&utm_campaign=claude_code_guide)
+- [API Endpoint 说明](https://docs.crazyrouter.com/api-endpoint?utm_source=github&utm_medium=tutorial&utm_campaign=claude_code_guide)
+- [Crazyrouter Claude Code 一键配置脚本](https://github.com/xujfcn/crazyrouter-claude-code)
+
+## 完整目录
 
 | 序号 | 文章 |
 |-|-|
@@ -64,3 +155,7 @@ https://cn.crazyrouter.com/v1
 | 34 | [34｜Claude Code 接入 Crazyrouter 连载 34：B 端产业应用场景方向参考](articles/34-34-claude-code-接入-crazyrouter-连载-34-b-端产业应用场景方向参考.md) |
 | 35 | [35｜Claude Code 接入 Crazyrouter 连载 35：C 端消费场景灵感参考](articles/35-35-claude-code-接入-crazyrouter-连载-35-c-端消费场景灵感参考.md) |
 | 36 | [36｜Claude Code 接入 Crazyrouter 连载 36：用设计和编程 Agent 设计网站](articles/36-36-claude-code-接入-crazyrouter-连载-36-用设计和编程-agent-设计网站.md) |
+
+## License
+
+MIT
